@@ -1,42 +1,44 @@
 import React, { Component } from 'react'
 
+import { Route } from 'react-router-dom'
+
 import './GoogleMap.css'
 
 class GoogleMap extends Component {
-  constructor() {
-    super ()
+constructor(props) {
+    super(props)
 
-    function initMap() {
-        const uluru = {lat: -25.363, lng: 131.044};
-        const map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: uluru
-        });
-        const marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
+    this.fetchMapData(props)
+  }
+
+  fetchMapData = () => {
+    fetch("https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyAHaMbOXL-4mm3PTNaErde9BmDxUX6YopU")
+    .then(response => response.json())
+    .then (console.log('hello'))
   }
 
     render() {
     return (
-
-<div>
-  <head>
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0" />
-    <meta charset="utf-8" />
-  </head>
-  <body>
-    <div id="map"></div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5WncMSzY2nUi84Ad5MWAeHQ-G4xDjAyQ&callback=initMap"
-    async defer></script>
-  </body>
-  </div>
-
+      <div className="googleMap">
+        <img 
+          className="googleMap-logo" 
+          src="http://vectorlogo4u.com/wp-content/uploads/2015/09/google-maps-vector-720x340.png"
+          alt="googleMap logo"
+        />
+        <form onSubmit={this.handleSubmit}>
+          <div>
+            <input className= "GoogleMap"
+              type="text"
+            />
+          </div>
+          <div>
+            <button type="submit">Find Location</button>
+          </div>
+        </form>
+        <Route path="/:maps/:api" render={() => <p>Something is happening</p>} />
+      </div>
         )
     }
 }
 
-export default Map
+export default GoogleMap
